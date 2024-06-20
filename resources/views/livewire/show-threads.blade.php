@@ -26,21 +26,38 @@
         @foreach ($threads as $thread)
             <div class="rounded-md bg-gradient-to-r from-slate-800 to-slate-900 hover:to-slate-800 mb-4">
                 <div class="p-4 flex gap-4">
-                    <div>Image, Avatar</div>
+                    <div>
+                        <img src="{{ $thread->user->avatar() }}" alt="{{ $thread->user->name }}" class="rounded-md">
+                    </div>
                     <div class="w-full">
                         <h2 class="mb-4 flex items-start justify-between">
                             <a href="" class="text-xl font-semibold text-white/90">
                                 {{ $thread->title }}
                             </a>
                             <span class="rounded-full text-xs py-2 px-4 capitalize"
-                                style="color:#00aced; border:1px solid #00aced;">Categoria</span>
+                                style="color:{{ $thread->category->color }}; border:1px solid {{ $thread->category->color }};">
+                                {{ $thread->category->name }}
+                            </span>
                         </h2>
                         <p class="flex items-center justify-between w-full text-xs">
                             <span class="text-blue-600 font-semibold">
-                                Usuario
+                                {{ $thread->user->name }}
+
                                 <span class="text-white/90">{{ $thread->created_at->diffForHumans() }}</span>
                             </span>
-                            <span class="text-slate-700">Respuestas y boton</span>
+                            <span class="flex items-center gap-1 text-slate-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 24 24"
+                                    fill="currentColor" class="size-6">
+                                    <path fill-rule="evenodd"
+                                        d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                {{ $thread->replies_count }}
+                                Respuesta{{ $thread->replies_count !== 1 ? 's' : '' }}
+                                |
+                                <a href="" class="hover:text-white">Editar</a>
+                            </span>
                         </p>
                     </div>
                 </div>
