@@ -23,4 +23,19 @@ class ThreadController extends Controller
 
         return redirect()->route('thread', $thread);
     }
+
+    public function create(Thread $thread)
+    {
+        $categories = Category::get();
+        return view('thread.create', compact('thread', 'categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate(['category_id' => 'required'], ['title' => 'required'], ['body' => 'required']);
+
+        auth()->user()->threads()->create($request->all());
+
+        return redirect()->route('dashboard');
+    }
 }
