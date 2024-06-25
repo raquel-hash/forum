@@ -9,9 +9,20 @@
                         {{ $reply->user->name }}
                     </p>
                     <p class="text-white/60 text-xs">{{ $reply->body }}</p>
+                    @if ($is_creating)
+                        <form wire:submit.prevent="postChild" class="mt-4">
+                            <input type="text" placeholder="Escribe una respuesta"
+                                class="bg-slate-800 border-0 rounded-md w-full p-3 text-white/60 text-xs"
+                                wire:model="body" @keydown.enter="$wire.$refresh()">
+                        </form>
+                    @endif
                     <p class="mt-4 text-white/60 text-xs flex gap-2 justify-end">
-                        <a href="" class="hover:text-white">Responder</a>
+                        @if (is_null($reply->reply_id))
+                            <a href="" wire:click.prevent="$toggle('is_creating')"
+                                class="hover:text-white">Responder</a>
+                        @endif
                         <a href="" class="hover:text-white">Editar</a>
+
                     </p>
                 </div>
             </div>
